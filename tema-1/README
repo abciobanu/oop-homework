@@ -1,0 +1,66 @@
+Ciobanu Andrei-Bogdan - 322CB
+
+Programare orientată pe obiecte (Seria CB)
+Tema 1 - LibroData - Gestiunea și livrarea de cărți electronice
+
+Clasele Book, Language, Author, PublishingBrand, EditorialGroup, PublishingRetailer și Country,
+respectiv interfața IPublishingArtifact au fost modelate conform specificațiilor din enunț.
+
+Implementările metodei Publish() pentru clasele Book, EditorialGroup și PublishingBrand se folosesc
+de metoda getXmlFormattedProperties() din clasa Book, care returnează un String cu proprietățile
+unei instanțe în format XML, fără indentare. Pentru a obține formatul XML descris în enunț,
+proprietățile sunt indentate astfel: un caracter tab pentru Publish() din Book, patru caractere tab
+pentru Publish() din EditorialGroup și PublishingBrand.
+
+Listele de autori, cărți, entități publicabile - IPublishingArtifact, tări sunt reprezentate prin
+structura de date HashMap. Alegerea acestei structuri este motivată de existența identificatorului
+unic pentru fiecare entitate. Astfel, operații precum adăugarea și căutarea au complexitate O(1).
+
+Clasa Initializer oferă metodele statice cu ajutorul cărora se inițializează biblioteca virtuală de
+cărți. Metoda statică initializeAssociations() oferă suport pentru inițializarea asocierilor dintre
+cărți și autori, grupuri de editare și cărți, grupuri de publicare și cărți, retaileri și țări,
+retaileri și artefacte (cărți, grupuri de editare, grupuri de publicare).
+
+Excepția InitializationFileException este definită pentru a indica o problemă la inițializare.
+Această excepție este aruncată de către metoda initializeAssociations() în cazul în care o asociere
+este imposibil de realizat: se precizează un id invalid în fișierul de intrare.
+
+Clasa Administration prezintă cele cinci funcționalități principale, prin metodele:
+- getBooksForPublishingRetailerID(int publishingRetailerID) - cărțile publicate de către un retailer
+- getLanguagesForPublishingRetailerID(int publishingReatilerID) – limbile în care sunt publicate
+cărțile unui retailer
+- getCountriesForBookID(int bookID) – țările în care o carte a fost publicată
+- getCommonBooksForRetailerIDs(int retailerID1, int retailerID2) – cărți comune între retaileri
+- getAllBooksForRetailerIDs (int retailerID1, int retailerID2) - cărți ale retailerilor (union)
+
+Implementările metodelor getCommonBooksForRetailerIDs() și getAllBooksForRetailerIDs() au
+complexitate O(2n + m), așadar implementarea este optimă -> O(n + m).
+
+Testarea metodelor menționate anterior este realizată în cadrul clasei AdministrationTest.
+
+getBooksForPublishingRetailerIdTest():
+    - fișier de intrare: "test-in/books-retailer-id.in" (un retailer ID pe fiecare linie)
+    - fișier(e) de ieșire: "test-out/books-retailer-[retailerId].out", unde retailerId este înlocuit
+cu ID-ul citit.
+
+getLanguagesForPublishingRetailerIdTest():
+    - fișier de intrare: "test-in/languages-retailer-id.in" (un retailer ID pe fiecare linie)
+    - fișier(e) de ieșire: "test-out/languages-retailer-[retailerId].out", unde retailerId este
+înlocuit cu ID-ul citit.
+
+getCountriesForBookIdTest():
+    - fișier de intrare: "test-in/countries-book-id.in" (un retailer ID pe fiecare linie)
+    - fișier(e) de ieșire: "test-out/countries-book-[retailerId].out", unde retailerId este înlocuit
+cu ID-ul citit.
+
+getCommonBooksForRetailerIdsTest():
+    - fișier de intrare: "test-in/common-books-retailer-ids.in" (o pereche de retailer IDs pe
+fiecare linie, un spațiu ca separator)
+    - fișier(e) de ieșire: "test-out/common-books-[retailerId1]-[retailerId2].out", unde retailerId1
+și retailerId2 sunt înlocuite cu perechea de ID-uri citite.
+
+getAllBooksForRetailerIdsTest():
+    - fișier de intrare: "test-in/all-books-retailer-ids.in" (o pereche de retailer IDs pe fiecare
+linie, un spațiu ca separator)
+    - fișier(e) de ieșire: "test-out/all-books-[retailerId1]-[retailerId2].out", unde retailerId1 și
+retailerId2 sunt înlocuite cu perechea de ID-uri citite.
